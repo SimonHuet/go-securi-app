@@ -1,7 +1,6 @@
 package webcam;
 
 import java.awt.Dimension;
-import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -24,6 +23,7 @@ public class WebcamStream {
         webcam.setCustomViewSizes(nonStandardResolutions);
         webcam.setViewSize(WebcamResolution.HD.getSize());
         webcam.open();
+        ImageIO.createImageInputStream(webcam.getImage());
 
         ImageIO.write(webcam.getImage(), "JPG", new File("webcaminput.jpg"));
         webcam.close();
