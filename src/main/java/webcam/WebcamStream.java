@@ -2,20 +2,23 @@ package webcam;
 
 import java.awt.Dimension;
 
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
+import java.awt.image.BufferedImage;
+
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
 
 public class WebcamStream {
-    public static void main (String[] args) throws IOException{
 
+    /**
+     * Get Webcam bind
+     * @return webcam
+     */
+    public static Webcam getWebcam(){
         Dimension[] nonStandardResolutions = new Dimension[] {
                 WebcamResolution.PAL.getSize(),
                 WebcamResolution.HD.getSize(),
-                new Dimension(2000, 1000),
                 new Dimension(1000, 500),
+                new Dimension(500, 250),
         };
 
         Webcam webcam = Webcam.getDefault();
@@ -23,9 +26,21 @@ public class WebcamStream {
         webcam.setCustomViewSizes(nonStandardResolutions);
         webcam.setViewSize(WebcamResolution.HD.getSize());
         webcam.open();
-        ImageIO.createImageInputStream(webcam.getImage());
 
-        ImageIO.write(webcam.getImage(), "JPG", new File("webcaminput.jpg"));
+        return webcam;
+    }
+
+    /**
+     * Get image from webcam;
+     * @return ImageInputStream
+     */
+    public static BufferedImage getWebcamImage() {
+        Webcam webcam = Webcam.getDefault();
+        webcam.open();
+
+        BufferedImage image = webcam.getImage();
         webcam.close();
+
+        return image;
     }
 }
