@@ -1,57 +1,66 @@
 package IHM;
+
 import Controlleur.Affichage;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 
-public class MainWindow extends JPanel implements ActionListener
-{
-        protected JButton b1, b2, b3;
+public class MainWindow extends JPanel implements ActionListener {
+    protected JButton b1;
 
     public MainWindow() {
 
-        b1 = new JButton("Disable middle button");
-        b1.setVerticalTextPosition(AbstractButton.CENTER);
-        b1.setHorizontalTextPosition(AbstractButton.LEADING);
-        b1.setMnemonic(KeyEvent.VK_D);
-        b1.setActionCommand("disable");
+        setLayout(null);
+        JPanel imgPanel = new JPanel();
+        JPanel labelPanel = new JPanel();
 
-        b2 = new JButton("Middle button");
-        b2.setVerticalTextPosition(AbstractButton.BOTTOM);
-        b2.setHorizontalTextPosition(AbstractButton.CENTER);
-        b2.setMnemonic(KeyEvent.VK_M);
-        b2.setActionCommand("Change");
+        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\logo.PNG";
+        imgPanel.setSize(new Dimension(1000,2000));
+        labelPanel.setSize(new Dimension(1000,20));
 
-        b3 = new JButton("Enable middle button");
-        b3.setMnemonic(KeyEvent.VK_E);
-        b3.setActionCommand("enable");
-        b3.setEnabled(false);
+        JLabel image=new JLabel(new ImageIcon(path));
+        JLabel title= new JLabel("Bienvenue sur l'application Go-securi !");
 
+        labelPanel.add(title);
+        imgPanel.add(image);
+
+        JPanel btnPanel = new JPanel();
+        b1 = new JButton("S'identifier");
+
+        b1.setBackground(new Color(55, 158, 193));
         b1.addActionListener(this);
-        b2.addActionListener(this);
-        b3.addActionListener(this);
 
-        b1.setToolTipText("Click this button to disable the middle button.");
-        b2.setToolTipText("This middle button change page.");
-        b3.setToolTipText("Click this button to enable the middle button.");
+        btnPanel.setSize(new Dimension(1000,2000));
 
-        add(b1);
-        add(b2);
-        add(b3);
+        btnPanel.add(b1);
+
+        try {
+            InputStream is = new BufferedInputStream(new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\resources\\Roboto-Medium.ttf"));
+            Font mediumFont = Font.createFont(Font.TRUETYPE_FONT, is);
+            Font font = mediumFont.deriveFont(15f);
+            title.setFont(font);
+            b1.setFont(font);
+        }catch(FontFormatException ffe){
+            ffe.printStackTrace();
+        }
+        catch( IOException e){
+            e.printStackTrace();
+        }
+
+        add(labelPanel);
+        add(imgPanel);
+        add(btnPanel);
+        labelPanel.setLocation(200,0);
+        imgPanel.setLocation(200,40);
+        btnPanel.setLocation(200,250);
     }
-        public void actionPerformed (ActionEvent e){
 
-            if(e.getActionCommand()=="disable" ) {
-                b2.setEnabled(false);
-                b1.setEnabled(false);
-                b3.setEnabled(true);
-            }else if (e.getActionCommand()=="enable") {
-                b2.setEnabled(true);
-                b1.setEnabled(true);
-                b3.setEnabled(false);
-            }else if (e.getActionCommand()=="Change") {
-                Affichage.changeWindow(new SelectionWindow());
-            }
+    public void actionPerformed(ActionEvent e) {
+        if(e.paramString().contains("Button1")){
+            Affichage.changeWindow(new WebcamWindow());
         }
     }
-
+}

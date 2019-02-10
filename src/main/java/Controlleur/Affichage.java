@@ -16,14 +16,12 @@ public class Affichage extends JPanel {
         frame.pack();
 
         MainWindow newContentPane = new MainWindow();
-        WebcamWindow webcamContentPane = new WebcamWindow();
         newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(webcamContentPane);
+        frame.setContentPane(newContentPane);
 
         frame.setVisible(true);
     }
     public static void changeWindow(JPanel jp) {
-
         frame.setContentPane(jp);
 
     }
