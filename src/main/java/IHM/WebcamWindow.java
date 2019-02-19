@@ -68,7 +68,7 @@ public class WebcamWindow extends JPanel implements ActionListener {
 
             // Traitement réponse
             //TODO : Call API :
-            if(false){
+            if(true){
                 Affichage.changeWindow(new SelectionWindow());
             }else{
                 System.out.println(" User isn't in database ");
