@@ -17,8 +17,6 @@ public class WebcamStream {
         Dimension[] nonStandardResolutions = new Dimension[] {
                 WebcamResolution.PAL.getSize(),
                 WebcamResolution.HD.getSize(),
-                new Dimension(1000, 500),
-                new Dimension(500, 250),
         };
 
         Webcam webcam = Webcam.getDefault();
@@ -32,7 +30,7 @@ public class WebcamStream {
 
     /**
      * Get image from webcam;
-     * @return ImageInputStream
+     * @return BufferedImage
      */
     public static BufferedImage getWebcamImage() {
         Webcam webcam = Webcam.getDefault();

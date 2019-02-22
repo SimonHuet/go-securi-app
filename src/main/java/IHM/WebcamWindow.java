@@ -25,7 +25,9 @@ public class WebcamWindow extends JPanel implements ActionListener {
         JButton logButton = new JButton("S'identifier");
 
         try {
-            InputStream is = new BufferedInputStream(new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\resources\\Roboto-Medium.ttf"));
+            InputStream is = new BufferedInputStream(
+                    new FileInputStream(System.getProperty("user.dir") + "\\src\\main\\resources\\Roboto-Medium.ttf")
+            );
             Font mediumFont = Font.createFont(Font.TRUETYPE_FONT, is);
             Font font = mediumFont.deriveFont(15f);
             logButton.setFont(font);
