@@ -1,7 +1,6 @@
 package IHM;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -29,8 +28,6 @@ public class SelectionWindow extends JPanel {
     private JButton DeconnectionButton;
 
     public SelectionWindow(){
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Pierre NEGRE
         Panel = new JPanel();
         Mousqueton = new JCheckBox();
         Gant = new JCheckBox();
@@ -78,49 +75,56 @@ public class SelectionWindow extends JPanel {
 
         //---- Mousqueton ----
         Mousqueton.setText("Mousqueton");
-        Mousqueton.addChangeListener(e -> StateChanged(e));
+        Mousqueton.addActionListener(e -> StateChanged("Mousqueton"));
         Panel.add(Mousqueton);
         Mousqueton.setBounds(5, 105, 110, 30);
+        Mousqueton.setSelected(true);
 
         //---- Gant ----
         Gant.setText("Gant");
-        //Gant.addChangeListener(e -> StateChanged(e));
+        Gant.addActionListener(e -> StateChanged("Gant"));
+        Gant.setSelected(true);
         Panel.add(Gant);
         Gant.setBounds(5, 135, 110, 30);
 
         //---- Ceinture ----
         Ceinture.setText("Ceinture");
-        //Ceinture.addChangeListener(e -> StateChanged(e));
+        Ceinture.addActionListener(e -> StateChanged("Ceinture"));
+Ceinture.setSelected(true);
         Panel.add(Ceinture);
         Ceinture.setBounds(5, 165, 110, 30);
 
         //---- Brassard ----
         Brassard.setText("Brassard");
-        //Brassard.addChangeListener(e -> StateChanged(e));
+        Brassard.addActionListener(e -> StateChanged("Brassard"));
+Brassard.setSelected(true);
         Panel.add(Brassard);
         Brassard.setBounds(175, 105, 110, 30);
 
         //---- Detecteur ----
         Detecteur.setText("Detecteur");
-        //Detecteur.addChangeListener(e -> StateChanged(e));
+        Detecteur.addActionListener(e -> StateChanged("Detecteur"));
+Detecteur.setSelected(true);
         Panel.add(Detecteur);
         Detecteur.setBounds(5, 195, 110, 30);
 
         //---- Lampe ----
         Lampe.setText("Lampe");
-        //Lampe.addChangeListener(e -> StateChanged(e));
+        Lampe.addActionListener(e -> StateChanged("Lampe"));
+Lampe.setSelected(true);
         Panel.add(Lampe);
         Lampe.setBounds(175, 135, 110, 30);
 
         //---- Gilet ----
         Gilet.setText("Gilet");
-        //Gilet.addChangeListener(e -> StateChanged(e));
+        Gilet.addActionListener(e -> StateChanged("Gilet"));
+Gilet.setSelected(true);
         Panel.add(Gilet);
         Gilet.setBounds(175, 165, 110, 30);
-
+int nbMousqueton = 10;
 
         //---- MousquetonNB ----
-        MousquetonNB.setModel(new SpinnerNumberModel(0, 0, 10, 1));
+        MousquetonNB.setModel(new SpinnerNumberModel(0, 0, nbMousqueton, 1));
         Panel.add(MousquetonNB);
         MousquetonNB.setBounds(115, 105, 50, 30);
 
@@ -153,18 +157,22 @@ public class SelectionWindow extends JPanel {
         GiletNB.setModel(new SpinnerNumberModel(0, 0, 10, 1));
         Panel.add(GiletNB);
         GiletNB.setBounds(285, 165, 50, 30);
+String UserFirstname = "Serge";
+String UserLastname = "Leblanc";
+
 
         //---- UserPanel ----
-        UserPanel.setText("UserName");
+        UserPanel.setText(UserFirstname +" "+ UserLastname);
         UserPanel.setEnabled(false);
         Panel.add(UserPanel);
         UserPanel.setBounds(15, 15, 110, 35);
 
         //---- DeconnectionButton ----
-        DeconnectionButton.setText("Deconnexion");
+        DeconnectionButton.setText("Enregistrer & quitter");
         DeconnectionButton.setBackground(new Color(55, 158, 193));
+        DeconnectionButton.addActionListener(e->SaveAdnQuit());
         Panel.add(DeconnectionButton);
-        DeconnectionButton.setBounds(330, 15, 145, DeconnectionButton.getPreferredSize().height);
+        DeconnectionButton.setBounds(330, 15, 200, DeconnectionButton.getPreferredSize().height);
 
         { // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -181,37 +189,56 @@ public class SelectionWindow extends JPanel {
         }
         add(Panel);
     }
-
-    private void StateChanged(ChangeEvent e) {
+    private  void SaveAdnQuit(){}
+    private void StateChanged(String type) {
         try {
-            var bla = e.getSource();
-            if(bla instanceof JButton){
-                var name = ((JButton) bla).getText();
-                switch (name){
+                switch (type){
                     case "Mousqueton" :
-                        Mousqueton.setText("pressed");
+                        if (!Mousqueton.isSelected()){
+                            MousquetonNB.setValue(0);
+                            MousquetonNB.setEnabled(false);
+                        }else MousquetonNB.setEnabled(true);
                         break;
                     case "Gant" :
-                        Gant.setText("pressed");
+                        if (!Gant.isSelected()){
+                            GantNB.setValue(0);
+                            GantNB.setEnabled(false);
+                        }else GantNB.setEnabled(true);
                         break;
                     case "Ceinture" :
-                        Ceinture.setText("pressed");
-                        break;
+                        if (!Ceinture.isSelected()){
+                            CeintureNB.setValue(0);
+                            CeintureNB.setEnabled(false);
+                        }else CeintureNB.setEnabled(true);
+                            break;
                     case "Brassard" :
-                        Brassard.setText("pressed");
+                        if (!Brassard.isSelected()){
+                            BrassardNB.setValue(0);
+                            BrassardNB.setEnabled(false);
+                        }else BrassardNB.setEnabled(true);
                         break;
                     case "Detecteur" :
-                        Detecteur.setText("pressed");
+
+                        if (!Detecteur.isSelected()){
+                            DetecteurNB.setValue(0);
+                            DetecteurNB.setEnabled(false);
+                        }else DetecteurNB.setEnabled(true);
                         break;
                     case "Lampe" :
-                        Lampe.setText("pressed");
+                        if (!Lampe.isSelected()){
+                            LampeNB.setValue(0);
+                            LampeNB.setEnabled(false);
+                        }else LampeNB.setEnabled(true);
                         break;
                     case "Gilet" :
-                        Gilet.setText("pressed");
+                        if (!Gilet.isSelected()){
+                            GiletNB.setValue(0);
+                            GiletNB.setEnabled(false);
+                        }else GiletNB.setEnabled(true);
                         break;
 
                 }
-            }
+
 
         }catch (Exception ex){}
     }

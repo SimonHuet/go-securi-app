@@ -23,6 +23,7 @@ public class Affichage extends JPanel {
     }
     public static void changeWindow(JPanel jp) {
         frame.setContentPane(jp);
-
+        frame.revalidate();
+        frame.repaint();
     }
 }
