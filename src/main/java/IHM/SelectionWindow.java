@@ -1,5 +1,7 @@
 package IHM;
 
+import Model.user;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedInputStream;
@@ -27,7 +29,7 @@ public class SelectionWindow extends JPanel {
     private JLabel UserPanel;
     private JButton DeconnectionButton;
 
-    public SelectionWindow(){
+    public SelectionWindow(user user){
         Panel = new JPanel();
         Mousqueton = new JCheckBox();
         Gant = new JCheckBox();
@@ -157,12 +159,10 @@ int nbMousqueton = 10;
         GiletNB.setModel(new SpinnerNumberModel(0, 0, 10, 1));
         Panel.add(GiletNB);
         GiletNB.setBounds(285, 165, 50, 30);
-String UserFirstname = "Serge";
-String UserLastname = "Leblanc";
 
 
         //---- UserPanel ----
-        UserPanel.setText(UserFirstname +" "+ UserLastname);
+        UserPanel.setText(user.getFirstName() +" "+ user.getLastName());
         UserPanel.setEnabled(false);
         Panel.add(UserPanel);
         UserPanel.setBounds(15, 15, 110, 35);
