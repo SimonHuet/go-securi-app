@@ -9,7 +9,7 @@ public class ConfigBdd {
     public ConfigBdd() {
     }
 
-    public  Connection connect () {
+    public static Connection connect () {
         Connection conn = null;
         try {
             // TODO: Faire un fichier de conf pour le path
