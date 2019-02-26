@@ -1,11 +1,16 @@
 package DAL;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.FaceMatch;
 import com.amazonaws.services.rekognition.model.SearchFacesByImageRequest;
 import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.SearchFacesByImageResult;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,10 +20,10 @@ public class ContactAPI {
     public static boolean Auth(){
         return true;
     }
-    public static AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.defaultClient();
 
     public String getFaceId (Image image) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJFEDG6WLUU5FJOHA", "OTkqjS4Gr1jKCMyX1rdcluTkVtATzQctg2Ncibcu");
+        AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(Regions.EU_WEST_1).build();
         SearchFacesByImageResult searchFacesByImageResult =
                 rekognitionClient.searchFacesByImage(createSearchFace(image));
         FaceMatch faceImageMatche = searchFacesByImageResult.getFaceMatches().get(0);

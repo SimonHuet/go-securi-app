@@ -1,6 +1,7 @@
 package IHM;
 
 import Controlleur.Affichage;
+import DAL.ContactAPI;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.sun.xml.internal.messaging.saaj.util.Base64;
@@ -13,6 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.ByteBuffer;
+
+import com.amazonaws.services.rekognition.model.Image;
 
 public class WebcamWindow extends JPanel implements ActionListener {
     public WebcamWindow() {
@@ -61,13 +65,18 @@ public class WebcamWindow extends JPanel implements ActionListener {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 ImageIO.write(image, "JPG", outputStream);
                 byte[] bytes = outputStream.toByteArray();
+                Image photo = new Image();
+                photo.setBytes(ByteBuffer.wrap(bytes));
+                ContactAPI contactAPI = new ContactAPI();
+                contactAPI.getFaceId(photo);
+
                 
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
 
             // Traitement réponse
-            //TODO : Call API :
+
             if(true){
                 Affichage.changeWindow(new SelectionWindow());
             }else{
