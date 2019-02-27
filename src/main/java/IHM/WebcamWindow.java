@@ -2,6 +2,8 @@ package IHM;
 
 import Controlleur.Affichage;
 import DAL.ContactAPI;
+import DAL.UserDAL;
+import Model.user;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.sun.xml.internal.messaging.saaj.util.Base64;
@@ -19,7 +21,11 @@ import java.nio.ByteBuffer;
 import com.amazonaws.services.rekognition.model.Image;
 
 public class WebcamWindow extends JPanel implements ActionListener {
+
+    private UserDAL userDAL;
+
     public WebcamWindow() {
+        userDAL = new UserDAL();
         Webcam webcam = WebcamStream.getWebcam();
 
         WebcamPanel webcamPanel = new WebcamPanel(webcam);
@@ -60,6 +66,7 @@ public class WebcamWindow extends JPanel implements ActionListener {
 
         if (e.paramString().contains("Button1")) {
             BufferedImage image = WebcamStream.getWebcamImage();
+            String faceId = null;
 
             try {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -68,20 +75,20 @@ public class WebcamWindow extends JPanel implements ActionListener {
                 Image photo = new Image();
                 photo.setBytes(ByteBuffer.wrap(bytes));
                 ContactAPI contactAPI = new ContactAPI();
-                contactAPI.getFaceId(photo);
-
-                
-            } catch (IOException exception) {
-                exception.printStackTrace();
+                faceId = contactAPI.getFaceId(photo);
+            } catch (Exception exception) {
+                System.out.println(" User isn't in collection amazon ");
+                Affichage.changeWindow(new ErrorWindow());
             }
 
             // Traitement réponse
-
-            if(true){
-                Affichage.changeWindow(new SelectionWindow());
-            }else{
+            try{
+                user user = userDAL.selectByFaceId(faceId);
+                Affichage.changeWindow(new SelectionWindow(user));
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
                 System.out.println(" User isn't in database ");
-
                 Affichage.changeWindow(new ErrorWindow());
             }
         }

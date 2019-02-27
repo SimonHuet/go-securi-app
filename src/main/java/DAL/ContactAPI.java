@@ -6,17 +6,10 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClientBuilder;
 import com.amazonaws.services.rekognition.model.*;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.List;
 
 public class ContactAPI {
-    public static boolean Auth(){
-        return true;
-    }
 
     public String getFaceId (Image image) throws JsonProcessingException {
         BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJFEDG6WLUU5FJOHA", "OTkqjS4Gr1jKCMyX1rdcluTkVtATzQctg2Ncibcu");
@@ -24,13 +17,13 @@ public class ContactAPI {
 
         SearchFacesByImageResult searchFacesByImageResult =
                 rekognitionClient.searchFacesByImage(createSearchFace(image));
-        FaceMatch faceImageMatche = searchFacesByImageResult.getFaceMatches().get(0);
+        FaceMatch faceImageMatch = searchFacesByImageResult.getFaceMatches().get(0);
 
-        if(!similarity(faceImageMatche)){
+        if(!similarity(faceImageMatch)){
             throw  new Error("Pas de ressemblance");
         }
-        System.out.println(faceImageMatche.getFace().getFaceId());
-        return faceImageMatche.getFace().getFaceId();
+
+        return faceImageMatch.getFace().getFaceId();
 
     }
 
