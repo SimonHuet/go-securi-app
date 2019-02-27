@@ -8,13 +8,13 @@ import java.sql.*;
 public class UserDAL {
 
     public user selectByFaceId(String faceId){
-        String sql = "SELECT * FROM User where FaceId = ? ";
+        String sql = "SELECT * FROM 'User' where FaceId = ? ";
 
         try {
             Connection conn = ConfigBdd.connect();
              PreparedStatement pstmt  = conn.prepareStatement(sql);
              pstmt.setString(1,faceId);
-             ResultSet rs = pstmt.executeQuery(sql);
+             ResultSet rs = pstmt.executeQuery();
              user user = null;
              while (rs.next()){
                 user =  createUser(rs);

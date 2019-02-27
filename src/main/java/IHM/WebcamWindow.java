@@ -21,7 +21,9 @@ import java.nio.ByteBuffer;
 import com.amazonaws.services.rekognition.model.Image;
 
 public class WebcamWindow extends JPanel implements ActionListener {
+
     private UserDAL userDAL;
+
     public WebcamWindow() {
         userDAL = new UserDAL();
         Webcam webcam = WebcamStream.getWebcam();
@@ -74,18 +76,19 @@ public class WebcamWindow extends JPanel implements ActionListener {
                 photo.setBytes(ByteBuffer.wrap(bytes));
                 ContactAPI contactAPI = new ContactAPI();
                 faceId = contactAPI.getFaceId(photo);
-            } catch (IOException exception) {
-                exception.printStackTrace();
+            } catch (Exception exception) {
+                System.out.println(" User isn't in collection amazon ");
+                Affichage.changeWindow(new ErrorWindow());
             }
 
             // Traitement réponse
-
-            if(true){
+            try{
                 user user = userDAL.selectByFaceId(faceId);
                 Affichage.changeWindow(new SelectionWindow(user));
-            }else{
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
                 System.out.println(" User isn't in database ");
-
                 Affichage.changeWindow(new ErrorWindow());
             }
         }
