@@ -12,7 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public class ContactAPI {
 
     public String getFaceId (Image image) throws JsonProcessingException {
-        BasicAWSCredentials awsCreds = new BasicAWSCredentials("AKIAJFEDG6WLUU5FJOHA", "OTkqjS4Gr1jKCMyX1rdcluTkVtATzQctg2Ncibcu");
+        BasicAWSCredentials awsCreds = new BasicAWSCredentials("S3cr3t", "S3cr3t");
         AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCreds)).withRegion(Regions.EU_WEST_1).build();
 
         SearchFacesByImageResult searchFacesByImageResult =
